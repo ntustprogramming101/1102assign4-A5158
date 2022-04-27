@@ -387,23 +387,25 @@ void draw() {
 		// > Remember to reset the soil under player's original position!
     for(int i=0;i<=5;i++){           
       image(soldier,soldierX[i]+=soldierSpeed,soldierY[i]*SOIL_SIZE+i*SOIL_SIZE*4);
-      if (soldierX[i]>=width){soldierX[i]=-SOIL_SIZE;} 
+      if (soldierX[i]>=width)soldierX[i]=-SOIL_SIZE;
       if(playerY+80>soldierY[i]*SOIL_SIZE+i*SOIL_SIZE*4 &&  playerY<soldierY[i]*SOIL_SIZE+i*SOIL_SIZE*4+80){
         if(playerX-soldierX[i]<80 && playerX-soldierX[i]>0){
+           playerHealth--;
            playerX=PLAYER_INIT_X;
            playerY=PLAYER_INIT_Y;
            playerMoveTimer=0;
-           playerCol=5;
-           playerRow=-1;
-           playerHealth--;
+           playerCol = (int) (playerX / SOIL_SIZE);
+           playerRow = (int) (playerY / SOIL_SIZE);
+           
         }
-        if(playerX-soldierX[i]>-80 && playerX-soldierX[i]<0){           
+        if(playerX-soldierX[i]>-80 && playerX-soldierX[i]<0){ 
+           playerHealth--;
            playerX=PLAYER_INIT_X;
            playerY=PLAYER_INIT_Y;
            playerMoveTimer=0;
-           playerCol=5;
-           playerRow=-1;
-           playerHealth--;
+           playerCol = (int) (playerX / SOIL_SIZE);
+           playerRow = (int) (playerY / SOIL_SIZE);
+           
         } 
       }
     }
@@ -429,7 +431,7 @@ void draw() {
 
 		// Health UI
     if(playerHealth>=PLAYER_MAX_HEALTH)playerHealth=PLAYER_MAX_HEALTH;
-    if(playerHealth==0)gameState=GAME_OVER;
+    if(playerHealth<=0)gameState=GAME_OVER;
     for(int i=0;i<=playerHealth-1;i++){
       image(life,10+i*70,10,50,51);
       
