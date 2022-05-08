@@ -99,35 +99,7 @@ void setup() {
 	playerRow = (int) (playerY / SOIL_SIZE);
 	playerMoveTimer = 0;
 	playerHealth = 2;
-
-	// Initialize soilHealth
-	soilHealth = new int[SOIL_COL_COUNT][SOIL_ROW_COUNT];
-	for(int i = 0; i < soilHealth.length; i++){
-		for (int j = 0; j < soilHealth[i].length; j++) {
-			 // 0: no soil, 15: soil only, 30: 1 stone, 45: 2 stones
-			soilHealth[i][j] = 15;
-      for(int x=0;x<8;x++){
-        soilHealth[x][x] = 30;      
-        }
-      if(j==8 || j==11 || j==12 ||j==15){
-          if(i==0 || i==3 || i==4 || i==7){
-          }else{soilHealth[i][j] = 30;}
-        } 
-        if(j==9 || j==10 || j==13 ||j==14){
-          if(i==1 || i==2 || i==5 ||i==6){
-          }else{soilHealth[i][j] = 30;}
-        }
-        if(j>=16){
-          if(i%3==0){if(j%3==1)soilHealth[i][j] = 30;}
-          if(i%3==1){if(j%3==0)soilHealth[i][j] = 30;}
-          if(i%3==2){if(j%3==2)soilHealth[i][j] = 30;}    
-          if(i%3==0){if(j%3==2)soilHealth[i][j] = 45;} 
-          if(i%3==1){if(j%3==1)soilHealth[i][j] = 45;}
-          if(i%3==2){if(j%3==0)soilHealth[i][j] = 45;}
-        }
-		}
-	}
-      //empty
+//empty
       soilEmp1 = new int[SOIL_ROW_COUNT];
       soilEmp2 = new int[SOIL_ROW_COUNT];
         for (int j = 1; j < 24; j++) {
@@ -144,6 +116,38 @@ void setup() {
           soilEmp1[0]=-1;
           soilEmp2[0]=-1;
         }
+
+	// Initialize soilHealth
+	soilHealth = new int[SOIL_COL_COUNT][SOIL_ROW_COUNT];
+	for(int i = 0; i < soilHealth.length; i++){
+		for (int j = 0; j < soilHealth[i].length; j++) {
+			 // 0: no soil, 15: soil only, 30: 1 stone, 45: 2 stones
+			soilHealth[i][j] = 15;
+      if(i*SOIL_SIZE==soilEmp1[j]*SOIL_SIZE || i*SOIL_SIZE==soilEmp2[j]*SOIL_SIZE)soilHealth[i][j] = 0;
+      
+      else if(i==j)
+        soilHealth[i][j] = 30;      
+        
+      else if(j==8 || j==11 || j==12 ||j==15){
+          if(i==0 || i==3 || i==4 || i==7){
+          }else{soilHealth[i][j] = 30;}
+        } 
+      else if(j==9 || j==10 || j==13 ||j==14){
+          if(i==1 || i==2 || i==5 ||i==6){
+          }else{soilHealth[i][j] = 30;}
+        }
+      else if(j>=16){
+          if(i%3==0){if(j%3==1)soilHealth[i][j] = 30;}
+          if(i%3==1){if(j%3==0)soilHealth[i][j] = 30;}
+          if(i%3==2){if(j%3==2)soilHealth[i][j] = 30;}    
+          if(i%3==0){if(j%3==2)soilHealth[i][j] = 45;} 
+          if(i%3==1){if(j%3==1)soilHealth[i][j] = 45;}
+          if(i%3==2){if(j%3==0)soilHealth[i][j] = 45;}
+        }
+        
+		}
+	}
+      
       
 
 	// Initialize soidiers and their position
@@ -219,7 +223,7 @@ void draw() {
 				// Change this part to show soil and stone images based on soilHealth value
 				// NOTE: To avoid errors on webpage, you can either use floor(j / 4) or (int)(j / 4) to make sure it's an integer.
 				int areaIndex = floor(j / 4);
-        if(j>=0 && j<8){
+        if(j>=0 && j<9){
           image(stone1,i* SOIL_SIZE,i* SOIL_SIZE);
         }
 				image(soils[areaIndex][4], i * SOIL_SIZE, j * SOIL_SIZE);
@@ -451,6 +455,24 @@ void draw() {
 			if(mousePressed){
 				gameState = GAME_RUN;
 				mousePressed = false;
+    
+    //soilempty
+    soilEmp1 = new int[SOIL_ROW_COUNT];
+      soilEmp2 = new int[SOIL_ROW_COUNT];
+        for (int j = 1; j < 24; j++) {
+          int soilE=floor(random(2)+1);
+          if(soilE==2){
+            soilE1=floor(random(8));
+            soilE2=floor(random(8));
+          }else{
+            soilE1=floor(random(8));
+            soilE2=8;
+          }
+          soilEmp1[j]=soilE1;
+          soilEmp2[j]=soilE2;
+          soilEmp1[0]=-1;
+          soilEmp2[0]=-1;
+        }
 
 				// Initialize player
 				playerX = PLAYER_INIT_X;
