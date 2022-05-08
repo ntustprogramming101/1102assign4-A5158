@@ -252,7 +252,7 @@ void draw() {
 		// > Remember to check if playerHealth is smaller than PLAYER_MAX_HEALTH!
     for(int i=0;i<=5;i++){
       image(cabbage,cabbageX[i]*SOIL_SIZE,cabbageY[i]*SOIL_SIZE+i*SOIL_SIZE*4);
-      if(playerX==cabbageX[i]*SOIL_SIZE && playerY==cabbageY[i]*SOIL_SIZE+i*SOIL_SIZE*4){        
+      if(playerX==cabbageX[i]*SOIL_SIZE && playerY==cabbageY[i]*SOIL_SIZE+i*SOIL_SIZE*4 && playerHealth<=4){        
           cabbageX[i]=1000;cabbageY[i]=1000;
           image(cabbage,cabbageX[i],cabbageY[i]);
           playerHealth++;        
