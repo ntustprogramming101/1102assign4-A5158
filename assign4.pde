@@ -223,7 +223,7 @@ void draw() {
 				// Change this part to show soil and stone images based on soilHealth value
 				// NOTE: To avoid errors on webpage, you can either use floor(j / 4) or (int)(j / 4) to make sure it's an integer.
 				int areaIndex = floor(j / 4);
-        if(j>=0 && j<9){
+        if(j>=0 && j<9 && i*SOIL_SIZE!=soilEmp1[j]*SOIL_SIZE){
           image(stone1,i* SOIL_SIZE,i* SOIL_SIZE);
         }
 				image(soils[areaIndex][4], i * SOIL_SIZE, j * SOIL_SIZE);
